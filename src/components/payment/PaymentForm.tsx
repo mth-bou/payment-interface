@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -16,6 +17,7 @@ const formSchema = z.object({
 })
 
 const PaymentForm: React.FC = () => {
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,9 +32,18 @@ const PaymentForm: React.FC = () => {
       const result = await sendPayment(values.amount, values.paymentMethod);
       if (result.state === "success") {
         console.log(`Payment of ${result.amount} using ${values.paymentMethod} processed successfully.`);
+        toast({
+          title: "Payment successful",
+          description: `Payment of ${result.amount} using ${values.paymentMethod} processed successfully.`
+        });
       }
     } catch (error) {
       console.error("Payment failed: ", error);
+      toast({
+        title: "Payment failed",
+        description: "An error occurred while processing the payment.",
+        variant: "destructive"
+      });
     }
   };
 
