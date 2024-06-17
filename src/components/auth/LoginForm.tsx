@@ -4,14 +4,18 @@ import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useAuth } from "@/context/AuthContext.tsx";
+import { Loader } from "@/components/ui/loader.tsx";
 
 const LoginForm = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { login, error } = useAuth();
 
   const handleLogin = async () => {
+    setIsLoading(true);
     await login(username, password);
+    setIsLoading(false);
   };
 
   return (
@@ -50,8 +54,9 @@ const LoginForm = () => {
           <Button
             onClick={handleLogin}
             className="w-full"
+            disabled={isLoading}
           >
-            Login
+            {isLoading ? <Loader size={20} /> : 'Login'}
           </Button>
           <Button variant="outline" className="w-full">
             Connect to MetaMask

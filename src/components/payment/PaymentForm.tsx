@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form";
 import { sendPayment } from "@/services/paymentService.ts";
+import { Loader } from "@/components/ui/loader.tsx";
 
 const formSchema = z.object({
   amount: z.coerce.number().min(0.01, "Required"),
@@ -18,6 +19,7 @@ const formSchema = z.object({
 
 const PaymentForm: React.FC = () => {
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -28,6 +30,7 @@ const PaymentForm: React.FC = () => {
   })
 
   const handlePayment = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
     try {
       const result = await sendPayment(values.amount, values.paymentMethod);
       if (result.state === "success") {
@@ -44,6 +47,8 @@ const PaymentForm: React.FC = () => {
         description: "An error occurred while processing the payment.",
         variant: "destructive"
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -103,7 +108,10 @@ const PaymentForm: React.FC = () => {
               <Button
                 type="submit"
                 className="self-center"
-              >Send</Button>
+                disabled={isLoading}
+              >
+                {isLoading ? <Loader size={20} /> : "Send"}
+              </Button>
             </form>
           </Form>
         </CardContent>
