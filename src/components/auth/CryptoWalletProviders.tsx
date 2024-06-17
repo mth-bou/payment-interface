@@ -17,7 +17,7 @@ export const CryptoWalletProviders = ({ onConnect }: CryptoWalletProvidersProps)
     try {
       const accounts = await providerWithInfo.provider.request({
         method: "eth_requestAccounts",
-      });
+      }) as string[];
 
       setSelectedWallet(providerWithInfo);
       setUserAccount(accounts?.[0]);
