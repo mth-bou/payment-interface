@@ -1,4 +1,5 @@
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import { useAuth } from "@/context/AuthContext.tsx";
 
 const formatInitials = (name: string | null | undefined) => {
   // Vérifiez si name existe et n'est pas juste une chaîne de caractères vide
@@ -14,8 +15,10 @@ const formatInitials = (name: string | null | undefined) => {
 };
 
 const ProfileInformations = () => {
+  const { isAuthenticated, username } = useAuth();
+
   const user = {
-    username: 'John Doe',
+    username,
     image: "https://img.lemde.fr/2017/09/14/78/0/530/530/700/0/75/0/b1cc6f0_11665-1ccfe6c.e9jduqh0k9.jpg"
   }; // Simulate user data
 
@@ -25,7 +28,9 @@ const ProfileInformations = () => {
       <div className="flex flex-shrink-0 items-center space-x-4">
         <div className="flex flex-col items-end ">
           <Avatar>
-            <AvatarImage src={user?.image} />
+            {isAuthenticated && user?.image && (
+              <AvatarImage src={user?.image} />
+            ) }
             <AvatarFallback>{formatInitials(user?.username)}</AvatarFallback>
           </Avatar>
         </div>

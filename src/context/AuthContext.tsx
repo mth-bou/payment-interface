@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { login as authLogin, User } from '@/services/authService';
 
 interface AuthContextType {
@@ -16,12 +16,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('username');
+    if (savedUsername) {
+      setIsAuthenticated(true);
+      setUsername(savedUsername);
+    }
+  }, []);
+
   const login = async (username: string, password: string) => {
     try {
       const user = await authLogin(username, password);
       if (user) {
         setIsAuthenticated(true);
         setUsername(username);
+        localStorage.setItem('username', username);
       }
       return user;
     } catch (error) {
@@ -33,6 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
     setUsername(null);
     setError(null);
+    localStorage.removeItem('username');
   };
 
   return (
