@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useAuth } from "@/context/AuthContext.tsx";
 import { Loader } from "@/components/ui/loader.tsx";
+import { CryptoWalletProviders } from "@/components/auth/CryptoWalletProviders.tsx";
 
 const LoginForm = () => {
   const [username, setUsername] = useState<string>('');
@@ -16,6 +17,11 @@ const LoginForm = () => {
     setIsLoading(true);
     await login(username, password);
     setIsLoading(false);
+  };
+
+  const handleWalletConnect = (provider: EIP6963ProviderDetail) => {
+    console.log(`Connected to wallet: ${provider.info.name}`);
+    // Handle wallet connect logic here
   };
 
   return (
@@ -58,9 +64,7 @@ const LoginForm = () => {
           >
             {isLoading ? <Loader size={20} /> : 'Login'}
           </Button>
-          <Button variant="outline" className="w-full">
-            Connect to MetaMask
-          </Button>
+          <CryptoWalletProviders onConnect={handleWalletConnect} />
         </div>
       </CardContent>
     </Card>
