@@ -10,9 +10,9 @@ const LoginModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="self-center">Login</Button>
+        <Button>Login</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <LoginForm />
       </DialogContent>
     </Dialog>

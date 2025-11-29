@@ -78,10 +78,10 @@ const PaymentForm: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-10 xs:p-4 flex justify-center">
-      <Card className="w-auto">
+    <div className="container mx-auto p-10 flex justify-center">
+      <Card className="w-auto border-border bg-card">
         <CardHeader>
-          <CardTitle>Payment</CardTitle>
+          <CardTitle className="text-card-foreground">Payment</CardTitle>
           <CardDescription>Send money easily.</CardDescription>
         </CardHeader>
         <CardContent>
@@ -90,14 +90,14 @@ const PaymentForm: React.FC = () => {
               onSubmit={form.handleSubmit(handlePayment)}
               className="flex flex-col justify-center gap-4"
             >
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 {/* amount */}
                 <FormField
                   control={form.control}
                   name="amount"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Amount :</FormLabel>
+                    <FormItem className="flex-1">
+                      <FormLabel>Amount</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -123,14 +123,14 @@ const PaymentForm: React.FC = () => {
                   control={form.control}
                   name="paymentMethod"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Payment Method :</FormLabel>
+                    <FormItem className="flex-1">
+                      <FormLabel>Payment Method</FormLabel>
                       <FormControl>
                         <Select
                           onValueChange={field.onChange}
                           value={field.value}
                         >
-                          <SelectTrigger className="w-[180px]">
+                          <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select a payment method" />
                           </SelectTrigger>
                           <SelectContent>
