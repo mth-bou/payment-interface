@@ -7,7 +7,7 @@ function App() {
   const { isAuthenticated, username } = useAuth();
 
   return (
-    <div className="bg-background">
+    <div className="min-h-screen bg-background">
       <Header />
       {isAuthenticated && username ? <WelcomeMessage username={username} /> : null}
       <PaymentForm />
