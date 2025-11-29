@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useAuth } from "@/context/AuthContext.tsx";
-import { Loader } from "@/components/ui/loader.tsx";
+import { Spinner } from "@/components/ui/spinner.tsx";
 import { CryptoWalletProviders } from "@/components/auth/CryptoWalletProviders.tsx";
 
 const LoginForm = () => {
@@ -62,7 +62,7 @@ const LoginForm = () => {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? <Loader size={20} /> : 'Login'}
+            {isLoading ? <Spinner /> : 'Login'}
           </Button>
           <CryptoWalletProviders onConnect={handleWalletConnect} />
         </div>
