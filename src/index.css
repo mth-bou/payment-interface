@@ -1,37 +1,73 @@
-@tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
 
-  @layer base {
-    :root {
-      --background: 209 20% 21%;
-      --foreground: 0 0% 100%;
-      --muted: 209 12% 25%;
-      --muted-foreground: 209 12% 75%;
-      --popover: 209 20% 18%;
-      --popover-foreground: 0 0% 100%;
-      --card: 209 20% 19%;
-      --card-foreground: 0 0% 100%;
-      --border: 209 10% 26%;
-      --input: 209 10% 29%;
-      --primary: 0 0% 100%;
-      --primary-foreground: 0 0% 20%;
-      --secondary: 0 0% 25%;
-      --secondary-foreground: 0 0% 85%;
-      --accent: 209 20% 36%;
-      --accent-foreground: 209 20% 96%;
-      --destructive: 9 94% 52%;
-      --destructive-foreground: 0 0% 100%;
-      --ring: 0 0% 100%;
-      --radius: 0.5rem;
-    }
-  }
+/* 1) Variables de thème (wrap en hsl) */
+:root {
+    --background: hsl(209 20% 21%);
+    --foreground: hsl(0 0% 100%);
+    --muted: hsl(209 12% 25%);
+    --muted-foreground: hsl(209 12% 75%);
+    --popover: hsl(209 20% 18%);
+    --popover-foreground: hsl(0 0% 100%);
+    --card: hsl(209 20% 19%);
+    --card-foreground: hsl(0 0% 100%);
+    --border: hsl(209 10% 26%);
+    --input: hsl(209 10% 29%);
+    --primary: hsl(0 0% 100%);
+    --primary-foreground: hsl(0 0% 20%);
+    --secondary: hsl(0 0% 25%);
+    --secondary-foreground: hsl(0 0% 85%);
+    --accent: hsl(209 20% 36%);
+    --accent-foreground: hsl(209 20% 96%);
+    --destructive: hsl(9 94% 52%);
+    --destructive-foreground: hsl(0 0% 100%);
+    --ring: hsl(0 0% 100%);
+    --radius: 0.5rem;
+}
 
-  @layer base {
+/* 2) Mapping Tailwind v4 : crée les utilitaires bg-background, border-border, etc. */
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-ring: var(--ring);
+
+    /* Optionnel : rayon Tailwind v4 */
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+}
+
+@layer base {
     * {
-      @apply border-border;
+        @apply border-border;
     }
+
     body {
-      @apply bg-background text-foreground;
+        @apply bg-background text-foreground;
     }
-  }
+}
